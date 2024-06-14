@@ -1,0 +1,11 @@
+C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaNegocio\bin\Debug\CapaNegocio.dll
+C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaNegocio\bin\Debug\CapaNegocio.pdb
+C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaNegocio\bin\Debug\CapaDatos.dll
+C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaNegocio\bin\Debug\CapaEntidad.dll
+C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaNegocio\bin\Debug\CapaDatos.pdb
+C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaNegocio\bin\Debug\CapaEntidad.pdb
+C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaNegocio\obj\Debug\CapaNegocio.csproj.AssemblyReference.cache
+C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaNegocio\obj\Debug\CapaNegocio.csproj.CoreCompileInputs.cache
+C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaNegocio\obj\Debug\CapaNego.81B9D119.Up2Date
+C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaNegocio\obj\Debug\CapaNegocio.dll
+C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaNegocio\obj\Debug\CapaNegocio.pdb
