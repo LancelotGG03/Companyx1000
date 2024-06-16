@@ -81,7 +81,6 @@ C:\Users\GORIL\Desktop\CompanyJLSNnueva\Capapresentacionadmin\bin\es\System.Web.
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\Capapresentacionadmin\bin\es\System.Web.WebPages.Razor.resources.dll
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\Capapresentacionadmin\obj\Debug\Capapresentacionadmin.csproj.AssemblyReference.cache
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\Capapresentacionadmin\obj\Debug\Capapresentacionadmin.csproj.CoreCompileInputs.cache
-C:\Users\GORIL\Desktop\CompanyJLSNnueva\Capapresentacionadmin\obj\Debug\Capapres.4AF636CD.Up2Date
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\Capapresentacionadmin\obj\Debug\Capapresentacionadmin.dll
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\Capapresentacionadmin\obj\Debug\Capapresentacionadmin.pdb
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\Capapresentacionadmin\bin\CapaEntidad.dll
@@ -90,3 +89,4 @@ C:\Users\GORIL\Desktop\CompanyJLSNnueva\Capapresentacionadmin\bin\CapaDatos.dll
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\Capapresentacionadmin\bin\CapaEntidad.pdb
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\Capapresentacionadmin\bin\CapaNegocio.pdb
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\Capapresentacionadmin\bin\CapaDatos.pdb
+C:\Users\GORIL\Desktop\CompanyJLSNnueva\Capapresentacionadmin\obj\Debug\CapaPres.0D5CB2CD.Up2Date
