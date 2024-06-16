@@ -16,8 +16,8 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div  class="col-12">
-                <button type="button" class="btn btn-secondary">Crear nuevo usuario</button>
+            <div class="col-12">
+                <button type="button" class="btn btn-success" onclick="AbrirModal(null)">Crear nuevo usuario</button>
             </div>
 
             <hr />
@@ -33,20 +33,69 @@
                     </tr>
                 </thead>
                 <tbody>
-
                 </tbody>
             </table>
-            
+
         </div>
     </div>
 </div>
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+</button>
 
-@section scripts 
+<!-- Modal -->
+<div class="modal fade" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body g-2">
+
+                <input id="txtid" type="text" value="0"/>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="exampleFormControlInput1" class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="txtnombres">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="exampleFormControlInput1" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="txtapellidos">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="exampleFormControlInput1" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="txtcorreo">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="cboactivo"class="form-label">Activo</label>
+                        <select id="cboactivo"class="form-select">
+                           
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                            
+                        </select>
+                    </div>
+
+                </div> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
     {
     <script>
 
         var tabladata;
+        var filaSeleccionada;
 
             $.ajax({
                 url: '@Url.Action("ListarUsuarios","Home")',
@@ -89,20 +138,83 @@
                                 {
                                 return '<span class="badge bg-danger">No</span>'
                                 }
-                            
+
                         }
                     },
                     {
-                        "defaultContent": '<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-pen m-1"></i></button>' +
+                        "defaultContent": '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fas fa-pen m-1"></i></button>' +
                             '<button type="button" class="btn btn-danger btn-sm ms-2"><i class="fas fa-trash m-1"></i></button>',
                         "orderable": false,
                         "searchable": false,
                         "width": "90px"
                     }
-                ]       
+
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json"
+                }
+
+            });
+
+        function AbrirModal(json)
+        {
+            $("#txtid").val(0);
+            $("#txtnombres").val("");
+            $("#txtapellidos").val("");
+            $("#txtcorreo").val("");
+            $("#cboactivo").val(1);
             
-        });
+            if (json != null) {
+
+                $("#txtid").val(json.IdUsuario);
+                $("#txtnombres").val(json.Nombres);
+                $("#txtapellidos").val(json.Apellidos);
+                $("#txtcorreo").val(json.Correo);
+                $("#cboactivo").val(json.Activo == true ? 1 : 0);
+            }
+
+            $("#FormModal").modal("show");
+        }
+
+        $("#tabla tbody").on("click", ".btn-editar", function () {
+
+            filaSeleccionada = $(this).closest("tr");
+
+            var data = tabladata.row(filaSeleccionada).data();
+
+            AbrirModal(data)
+
+            console.log(data)
+
+            
+        })
+
+        function Guardar() {
+
+            var Usuario = {
+
+                IdUsuario: $("#txtid").val(),
+                Activo: $("#cboactivo").val() == 1 ? true: false,
+                Apellidos: $("#txtapellidos").val(),
+                Correo: $("#txtcorreo").val(),                 
+                Nombres: $("#txtnombres").val(), 
+                
+            }
+
+            if (Usuario.IdUsuario == 0) {
+
+                tabladata.row.add(Usuario).draw(false);
+
+            } else {
+
+                tabladata.row(filaSeleccionada).data(Usuario).draw(false);
+                
+
+            }
+
+            $("#FormModal").modal("hide");
+        }
 
 
     </script>
-    }
+}
