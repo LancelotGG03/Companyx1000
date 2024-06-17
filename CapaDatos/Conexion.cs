@@ -10,7 +10,5 @@ namespace CapaDatos
     public class Conexion
     {
         public static string Conection = ConfigurationManager.ConnectionStrings["CompanyJLS"].ToString();
-
-        public static string cn { get; internal set; }
     }
 }
