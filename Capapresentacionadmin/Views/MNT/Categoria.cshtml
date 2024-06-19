@@ -1,33 +1,30 @@
 ﻿
 @{
-    ViewBag.Title = "Usuarios";
+    ViewBag.Title = "Categoria";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <ol class="breadcrumb mb-4 mt-4">
     <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
-    <li class="breadcrumb-item active">Usuarios</li>
+    <li class="breadcrumb-item active">Categorias</li>
 </ol>
 
 <div class="card">
     <div class="card-header">
-        <i class="fas fa-users m-1"></i> Lista de usuarios
+        <i class="fas fa-users m-1"></i> Lista de categorias
     </div>
     <div class="card-body">
         <div class="row mt-6">
             <div class="col-12">
-                <button type="button" class="btn btn-success" onclick="AbrirModal(null)">Crear nuevo usuario</button>
+                <button type="button" class="btn btn-success" onclick="AbrirModal(null)">Crear nueva categoria</button>
             </div>
 
-            <hr class="mt-3"/>
+            <hr class="mt-2" />
 
-            <table id="tabla" class="display cell-border"  style="width: 100%">
+            <table id="tabla" class="display cell-border" style="width: 100%">
                 <thead>
                     <tr>
-                        <th> Nombres </th>
-                        <th> Apellidos </th>
-                        <th> Correo </th>
+                        <th> Categoria </th>
                         <th> Activo </th>
                         <th></th>
                     </tr>
@@ -51,35 +48,27 @@
             </div>
             <div class="modal-body ">
 
-                <input id="txtid" type="text" value="0"/>
+                <input id="txtid" type="text" value="0" />
 
                 <div class="row g-2">
                     <div class="col-sm-6">
-                        <label for="exampleFormControlInput1" class="form-label">Nombres</label>
-                        <input type="text" class="form-control" id="txtnombres" autocomplete="off">
+                        <label for="exampleFormControlInput1" class="form-label">Descripcion</label>
+                        <input type="text" class="form-control" id="txtdescripcion" autocomplete="off">
                     </div>
                     <div class="col-sm-6">
-                        <label for="exampleFormControlInput1" class="form-label">Apellidos</label>
-                        <input type="text" class="form-control" id="txtapellidos" autocomplete="off">
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="exampleFormControlInput1" class="form-label">Correo</label>
-                        <input type="email" class="form-control" id="txtcorreo" autocomplete="off">
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="cboactivo"class="form-label">Activo</label>
-                        <select id="cboactivo"class="form-select">
-                           
+                        <label for="cboactivo" class="form-label">Activo</label>
+                        <select id="cboactivo" class="form-select">
+
                             <option value="1">Si</option>
                             <option value="0">No</option>
-                            
+
                         </select>
                     </div>
 
-                </div> 
+                </div>
                 <div class="row mt-2">
                     <div class="col-12">
-                        <div id="mensajeError"class="alert alert-danger" role="alert">
+                        <div id="mensajeError" class="alert alert-danger" role="alert">
                             A simple danger alert—check it out!
                         </div>
                     </div>
@@ -101,8 +90,8 @@
         var tabladata;
         var filaSeleccionada;
 
-            $.ajax({
-                url: '@Url.Action("ListarUsuarios","Home")',
+            @*$.ajax({
+                url: '@Url.Action("ListarCategoria","MTN")',
                 type: "GET",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
@@ -112,7 +101,7 @@
                     console.log(data)
                 }
 
-            });
+            });*@
 
 
         tabladata = $("#tabla").DataTable(
@@ -121,16 +110,14 @@
                 responsive: true,
                 ordering: false,
                 "ajax": {
-                    url: '@Url.Action("ListarUsuarios","Home")',
+                    url: '@Url.Action("ListarCategoria", "MNT")',
                     type: "GET",
                     dataType: "json"
 
 
         },
                 "columns": [
-                    { "data": "Nombres" },
-                    { "data": "Apellidos" },
-                    { "data": "Correo" },
+                    { "data": "Descripcion" },
                     {
                         "data": "Activo", "render": function (valor)
                         {
@@ -163,22 +150,16 @@
         function AbrirModal(json)
         {
             $("#txtid").val(0);
-            $("#txtnombres").val("");
-            $("#txtapellidos").val("");
-            $("#txtcorreo").val("");
+            $("#txtdescripcion").val("");
             $("#cboactivo").val(1);
 
 
             $("#mensajeError").hide();
 
-
-
             if (json != null) {
 
-                $("#txtid").val(json.IdUsuario);
-                $("#txtnombres").val(json.Nombres);
-                $("#txtapellidos").val(json.Apellidos);
-                $("#txtcorreo").val(json.Correo);
+                $("#txtid").val(json.IdCategoria);
+                $("#txtdescripcion").val(json.Descripcion);
                 $("#cboactivo").val(json.Activo == true ? 1 : 0);
             }
 
@@ -199,14 +180,14 @@
 
         $("#tabla tbody").on("click", ".btn-eliminar", function () {
 
-            var usuarioseleccionado = $(this).closest("tr");
+            var categoriaseleccionada = $(this).closest("tr");
 
-            var data = tabladata.row(usuarioseleccionado).data();
+            var data = tabladata.row(categoriaseleccionada).data();
 
 
             swal({
                 title: "¿Está seguro?",
-                text: "¿Desea eliminar el usuario?, esta opción es irreversible.",
+                text: "¿Desea eliminar la categoria?, esta opción es irreversible.",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonClass: "btn-primary",
@@ -217,16 +198,16 @@
                 function () {
 
                     $.ajax({
-                        url: '@Url.Action("EliminarUsuario", "Home")',
+                        url: '@Url.Action("EliminarCategoria", "MNT")',
                         type: "POST",
-                        data: JSON.stringify({ id: data.IdUsuario }),
+                        data: JSON.stringify({ id: data.IdCategoria }),
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function (data) {
 
                             if (data.resultado) {
 
-                                tabladata.row(usuarioseleccionado).remove().draw();
+                                tabladata.row(categoriaseleccionada).remove().draw();
                             } else {
 
                                 swal("No se pudo eliminar", data.mensaje, "error")
@@ -243,33 +224,31 @@
 
         function Guardar() {
 
-            var Usuario = {
+            var Categoria = {
 
-                IdUsuario: $("#txtid").val(),
-                Activo: $("#cboactivo").val() == 1 ? true: false,
-                Apellidos: $("#txtapellidos").val(),
-                Correo: $("#txtcorreo").val(),
-                Nombres: $("#txtnombres").val(),
+                IdCategoria: $("#txtid").val(),
+                Descripcion: $("#txtdescripcion").val(),
+                Activo: $("#cboactivo").val() == 1 ? true : false,
 
             }
 
             $.ajax({
-                url: '@Url.Action("GuardarUsuario", "Home")',
+                url: '@Url.Action("GuardarCategoria", "MNT")',
                 type: "POST",
-                data: JSON.stringify({ objeto: Usuario }),
+                data: JSON.stringify({ objeto: Categoria }),
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
 
                     $(".modal-body").LoadingOverlay("hide");
 
-                    //USUARIO NUEVO
-                    if (Usuario.IdUsuario == 0) {
+                    //Categoria nueva
+                    if (Categoria.IdCategoria == 0) {
 
                         if (data.resultado != 0) {
 
-                            Usuario.IdUsuario = data.resultado;
-                            tabladata.row.add(Usuario).draw(false);
+                            Categoria.IdCategoria = data.resultado;
+                            tabladata.row.add(Categoria).draw(false);
                             $("#FormModal").modal("hide");
                         }
                         else
@@ -279,11 +258,11 @@
                         }
 
                     } else
-                    //USUARIO EDITAR
+                    //editar categoria
                     {
                         if (data.resultado) {
 
-                            tabladata.row(filaSeleccionada).data(Usuario).draw(false);
+                            tabladata.row(filaSeleccionada).data(Categoria).draw(false);
                             filaSeleccionada = null;
                             $("#FormModal").modal("hide");
 
@@ -317,3 +296,4 @@
 
     </script>
 }
+

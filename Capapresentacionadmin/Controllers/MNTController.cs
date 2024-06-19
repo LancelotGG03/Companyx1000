@@ -1,49 +1,48 @@
-﻿using System;
-using System.Collections;
+﻿using CapaEntidad;
+using CapaNegocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CapaEntidad;
-using CapaNegocio;
 
 namespace Capapresentacionadmin.Controllers
 {
-    public class HomeController : Controller
+    public class MNTController : Controller
     {
-        public ActionResult Index()
+        // GET: Mantenedor
+        public ActionResult Categoria()
         {
             return View();
         }
-
-        public ActionResult Usuarios()
+        public ActionResult Plato()
         {
             return View();
         }
 
         [HttpGet]
-        public JsonResult ListarUsuarios()
+        public JsonResult ListarCategoria()
         {
-            List<Usuario> oLista = new List<Usuario>();
+            List<Categoria> oLista = new List<Categoria>();
 
-            oLista = new CN_Usuarios().Listar();
+            oLista = new CN_Categoria().Listar();
 
             return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult GuardarUsuario(Usuario objeto)
+        public JsonResult GuardarCategoria(Categoria objeto)
         {
             object resultado;
             string mensaje = string.Empty;
 
-            if (objeto.IdUsuario == 0)
+            if (objeto.IdCategoria == 0)
             {
-                resultado = new CN_Usuarios().Registrar(objeto, out mensaje);
+                resultado = new CN_Categoria().Registrar(objeto, out mensaje);
             }
             else
             {
-                resultado = new CN_Usuarios().Editar(objeto, out mensaje);
+                resultado = new CN_Categoria().Editar(objeto, out mensaje);
             }
 
             return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
@@ -52,14 +51,15 @@ namespace Capapresentacionadmin.Controllers
         }
 
         [HttpPost]
-        public JsonResult EliminarUsuario(int id)
+        public JsonResult EliminarCategoria(int id)
         {
             bool respuesta = false;
             string mensaje = string.Empty;
 
-            respuesta = new CN_Usuarios().Eliminar(id, out mensaje);
+            respuesta = new CN_Categoria().Eliminar(id, out mensaje);
 
             return Json(new { resultado = respuesta, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
     }
+
 }

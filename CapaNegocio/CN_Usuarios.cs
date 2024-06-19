@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,18 +36,34 @@ namespace CapaNegocio
 
             if (string.IsNullOrEmpty(Mensaje))
             {
-                string Contraseña = "Test123";
 
-                obj.Contraseña = CN_Recursos.ConvertirSha256(Contraseña);
+                string Contraseña = CN_Recursos.GenerarClave();
 
-                return objCapaDato.Registrar(obj, out Mensaje);
+                string asunto = "Creación de la cuenta";
+
+                string mensaje_correo = "<h3>Su cuenta fue creada correctamente</h3></br><p>Su contraseña para acceder es: !Contraseña!</p>";
+
+                mensaje_correo = mensaje_correo.Replace("!Contraseña!", Contraseña);
+
+                bool respuesta = CN_Recursos.EnviarCorreo(obj.Correo, asunto, mensaje_correo);
+
+                if (respuesta)
+                {
+                    obj.Contraseña = CN_Recursos.ConvertirSha256(Contraseña);
+                    return objCapaDato.Registrar(obj, out Mensaje);
+                }
+
+                else
+                {
+                    Mensaje = "No se puede enviar el correo";
+                    return 0;
+                }
+                
             }
             else
             {
                 return 0;
             }
-
-
         }
 
         public bool Editar(Usuario obj, out string Mensaje)
