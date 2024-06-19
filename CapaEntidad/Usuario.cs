@@ -9,14 +9,6 @@ namespace CapaEntidad
 {
     public class Usuario
     {
-//        IdUsuario int primary key identity,
-//Nombres varchar(100),
-//Apellidos varchar(100),
-//Correo varchar(100),
-//Contraseña varchar(150),
-//Reestablecer bit default 1,
-//Activo bit default 1,
-//FechaRegistro datetime default getdate()
 
         public int IdUsuario { get; set; }
         public string Nombres { get; set; }
