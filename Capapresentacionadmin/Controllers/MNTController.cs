@@ -24,7 +24,8 @@ namespace Capapresentacionadmin.Controllers
         {
             return View();
         }
-
+        //+++++++++++++++++++ CATEGORIA ++++++++++++++++++++++//
+        #region Categoria
         [HttpGet]
         public JsonResult ListarCategoria()
         {
@@ -65,6 +66,7 @@ namespace Capapresentacionadmin.Controllers
 
             return Json(new { resultado = respuesta, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
         //+++++++++++++++++++ PLATO ++++++++++++++++++++++//
 
@@ -82,7 +84,7 @@ namespace Capapresentacionadmin.Controllers
         [HttpPost]
         public JsonResult GuardarPlato(string objeto, HttpPostedFileBase archivoImagen)
         {
-            
+           
             string mensaje = string.Empty;
             bool operacion_exitosa = true;
             bool guardar_imagen_exito = true;

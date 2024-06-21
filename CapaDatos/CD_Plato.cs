@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using System.Reflection;
 
 
 namespace CapaDatos
@@ -21,9 +22,14 @@ namespace CapaDatos
             {
                 using (SqlConnection oConection = new SqlConnection(Conexion.Conection))
                 {
-                    string query = "SELECT IdPlato, Ingredientes, Descripcion, Valor, Activo FROM Plato";
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine("select p.IdPlato, p.Nombreplato, p.Descripcion,");
+                    sb.AppendLine("c.IdCategoria, c.Descripcion[DesCategoria],");
+                    sb.AppendLine("p.Precio, p.Rutaimagen, p.Nombreimagen, p.Activo");
+                    sb.AppendLine("from Plato p");
+                    sb.AppendLine("inner join Categoria c on c.IdCategoria = p.IdCat");
 
-                    SqlCommand cmd = new SqlCommand(query, oConection);
+                    SqlCommand cmd = new SqlCommand(sb.ToString(), oConection);
                     cmd.CommandType = CommandType.Text;
 
                     oConection.Open();
@@ -38,6 +44,8 @@ namespace CapaDatos
                                     IdPlato = Convert.ToInt32(dr["IdPlato"]),
                                     Nombreplato = dr["NombrePlato"].ToString(),
                                     Ingredientes = dr["Ingredientes"].ToString(),
+                                    Descripcion = dr["Descripcion"].ToString(),
+                                    oCategoria = new Categoria() { IdCategoria = Convert.ToInt32(dr["IdCategoria"]), Descripcion = dr["DesCategoria"].ToString() },
                                     Precio = Convert.ToDecimal(dr["Precio"], new CultureInfo("es-CO")),
                                     Rutaimagen = dr["Rutaimagen"].ToString(),
                                     Nombreimagen = dr["Nombreimagen"].ToString(),
@@ -66,7 +74,8 @@ namespace CapaDatos
                     SqlCommand cmd = new SqlCommand("sp_RegistrarPlato", oconexion);
                     cmd.Parameters.AddWithValue("Nombre", obj.Nombreplato);
                     cmd.Parameters.AddWithValue("Ingredientes", obj.Ingredientes);
-                    cmd.Parameters.AddWithValue("IdCat", obj.IdPlato);
+                    cmd.Parameters.AddWithValue("Descripcion",obj.Descripcion);
+                    cmd.Parameters.AddWithValue("IdCat", obj.oCategoria.IdCategoria);
                     cmd.Parameters.AddWithValue("Precio", obj.Precio);
                     cmd.Parameters.AddWithValue("Activo", obj.Activo);
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
@@ -100,9 +109,11 @@ namespace CapaDatos
                 using (SqlConnection oconexion = new SqlConnection(Conexion.Conection))
                 {
                     SqlCommand cmd = new SqlCommand("sp_EditarPlato", oconexion);
+                    cmd.Parameters.AddWithValue("IdPlato", obj.IdPlato);
                     cmd.Parameters.AddWithValue("Nombre", obj.Nombreplato);
                     cmd.Parameters.AddWithValue("Ingredientes", obj.Ingredientes);
-                    cmd.Parameters.AddWithValue("IdCat", obj.IdPlato);
+                    cmd.Parameters.AddWithValue("Descripcion", obj.Descripcion);
+                    cmd.Parameters.AddWithValue("IdCat", obj.oCategoria.IdCategoria);
                     cmd.Parameters.AddWithValue("Precio", obj.Precio);
                     cmd.Parameters.AddWithValue("Activo", obj.Activo);
                     cmd.Parameters.Add("Resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
@@ -140,7 +151,7 @@ namespace CapaDatos
 
                     string query = "update Plato set Rutaimagen = @Rutaimagen, Nombreimagen = @Nombreimagen where IdPlato = @IdPlato";
 
-                    SqlCommand cmd = new SqlCommand("sp_RegistrarPlato", oconexion);
+                    SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.Parameters.AddWithValue("@Rutaimagen", obj.Rutaimagen);
                     cmd.Parameters.AddWithValue("@Nombreimagen", obj.Nombreimagen);
                     cmd.Parameters.AddWithValue("@IdPlato", obj.IdPlato);

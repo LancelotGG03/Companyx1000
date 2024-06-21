@@ -4,3 +4,9 @@ C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaEntidad\obj\Debug\CapaEntidad.csproj
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaEntidad\obj\Debug\CapaEntidad.csproj.CoreCompileInputs.cache
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaEntidad\obj\Debug\CapaEntidad.dll
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaEntidad\obj\Debug\CapaEntidad.pdb
+C:\Users\GORIL\Desktop\Companynueva\CapaEntidad\bin\Debug\CapaEntidad.dll
+C:\Users\GORIL\Desktop\Companynueva\CapaEntidad\bin\Debug\CapaEntidad.pdb
+C:\Users\GORIL\Desktop\Companynueva\CapaEntidad\obj\Debug\CapaEntidad.csproj.AssemblyReference.cache
+C:\Users\GORIL\Desktop\Companynueva\CapaEntidad\obj\Debug\CapaEntidad.csproj.CoreCompileInputs.cache
+C:\Users\GORIL\Desktop\Companynueva\CapaEntidad\obj\Debug\CapaEntidad.dll
+C:\Users\GORIL\Desktop\Companynueva\CapaEntidad\obj\Debug\CapaEntidad.pdb

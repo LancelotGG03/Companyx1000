@@ -7,3 +7,12 @@ C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaDatos\obj\Debug\CapaDatos.csproj.Cor
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaDatos\obj\Debug\CapaDatos.csproj.Up2Date
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaDatos\obj\Debug\CapaDatos.dll
 C:\Users\GORIL\Desktop\CompanyJLSNnueva\CapaDatos\obj\Debug\CapaDatos.pdb
+C:\Users\GORIL\Desktop\Companynueva\CapaDatos\bin\Debug\CapaDatos.dll
+C:\Users\GORIL\Desktop\Companynueva\CapaDatos\bin\Debug\CapaDatos.pdb
+C:\Users\GORIL\Desktop\Companynueva\CapaDatos\bin\Debug\CapaEntidad.dll
+C:\Users\GORIL\Desktop\Companynueva\CapaDatos\bin\Debug\CapaEntidad.pdb
+C:\Users\GORIL\Desktop\Companynueva\CapaDatos\obj\Debug\CapaDatos.csproj.AssemblyReference.cache
+C:\Users\GORIL\Desktop\Companynueva\CapaDatos\obj\Debug\CapaDatos.csproj.CoreCompileInputs.cache
+C:\Users\GORIL\Desktop\Companynueva\CapaDatos\obj\Debug\CapaDatos.csproj.Up2Date
+C:\Users\GORIL\Desktop\Companynueva\CapaDatos\obj\Debug\CapaDatos.dll
+C:\Users\GORIL\Desktop\Companynueva\CapaDatos\obj\Debug\CapaDatos.pdb

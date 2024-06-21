@@ -11,7 +11,8 @@ namespace CapaEntidad
         public int IdPlato { get; set; }
         public string Nombreplato { get; set;}
         public string Ingredientes { get; set;}
-        public Categoria oDescripcion { get; set;}
+        public Categoria oCategoria { get; set;}
+        public string Descripcion { get; set;}
         public decimal Precio { get; set; }
         public string PrecioTexto { get; set; }
         public string Rutaimagen { get; set; }

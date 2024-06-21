@@ -27,6 +27,7 @@
                         <th> Nombre Plato </th>
                         <th> Ingredientes </th>
                         <th> Descripcion </th>
+                        <th> Categoria </th>
                         <th> Precio </th>
                         <th> Activo </th>
                         <th></th>
@@ -46,7 +47,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Usuario</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Plato</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body ">
@@ -60,7 +61,7 @@
                         </div>
                     </div>
                     <div class="mb-2">
-                        <input class="form-control" type="file" id="fileProducto" accept="image/png, image/jpg, image/jpeg" onchange="" />
+                        <input class="form-control" type="file" id="fileProducto" accept="image/png, image/jpg, image/jpeg" onchange="mostrarImagen(this)" />
                     </div>
 
                     <div class="col-sm-3">
@@ -72,17 +73,26 @@
                             <label class="form-label">Ingredientes</label>
                             <input type="text" class="form-control" id="txtingredientes" name="ingredientes" />
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label">Precio</label>
+                            <input type="text" class="form-control" id="txtprecio" name="Precio" autocomplete="off" />
+                        </div>
                     </div>
 
                     <div class="col-sm-3">
                         <div class="mb-3">
-                            <label class="form-label">Precio</label>
-                            <input type="text" class="form-control" id="txtprecio" name="Precio" />
-                        </div>
-                        <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Descripcion</label>
-                            <input type="text" class="form-control" id="txtdescripcion" autocomplete="off">
+                            <textarea type="text" class="form-control" id="txtdescripcion" name="Descripcion" style="height:125px;resize:none" autocomplete="off">></textarea>
                         </div>
+                        <div>
+                            <div class="mb-3">
+                                <label class="form-label">Categoria</label>
+                                <select id="cbocategoria" class="form-select">
+                                </select>
+                            </div>
+                        </div>
+                        
+
                     </div>
 
                     <div class="row g-2">
@@ -129,19 +139,17 @@
         var tabladata;
         var filaSeleccionada;
 
-            @*$.ajax({
-                url: '@Url.Action("ListarCategoria","MTN")',
-                type: "GET",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (data)
 
-                {
-                    console.log(data)
+        function mostrarImagen(input) {
+            if (input.files) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#img_producto").attr("src", e.target.result).width(200).height(197)
                 }
-
-            });*@
-
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
         tabladata = $("#tabla").DataTable(
 
@@ -178,18 +186,46 @@
                         "searchable": false,
                         "width": "90px"
                     }
-
                 ],
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json"
                 }
-
             });
+
+        $.ajax({
+            url: '@Url.Action("ListarCategoria", "MNT")',
+            type: "GET",
+            data: null,
+            DataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+
+                console.log(data)
+
+                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocategoria");
+
+                $.each(data.data, function (index, valor) {
+
+                    $("<option>").attr({ "value": valor.IdCategoria }).text(valor.Descripcion).appendTo("#cbocategoria");
+
+                })
+            },
+
+            error: function (error) {
+                console.log(error)
+            }
+        });
 
         function AbrirModal(json)
         {
             $("#txtid").val(0);
+            $("#img_producto").removeAttr("src");
+            $("#fileProducto").val();
+            $("#txtnombre").val("");
+            $("#txtingredientes").val("");
+            $("#txtprecio").val("");
             $("#txtdescripcion").val("");
+            $("#cbocategoria").val($("#cbocategoria option:first").val());
             $("#cboactivo").val(1);
 
 
@@ -197,8 +233,12 @@
 
             if (json != null) {
 
-                $("#txtid").val(json.IdCategoria);
+                $("#txtid").val(json.IdPlato);
+                $("#txtnombre").val(json.Nombre);
+                $("#txtingredientes").val("");
+                $("#txtprecio").val(json.Precio);
                 $("#txtdescripcion").val(json.Descripcion);
+                $("#cbocategoria").val(json.oCategoria.IdCategoria);
                 $("#cboactivo").val(json.Activo == true ? 1 : 0);
             }
 
@@ -263,31 +303,48 @@
 
         function Guardar() {
 
-            var Categoria = {
+            var ImagenSeleccionada = $("#fileProducto")[0].files[0];
 
-                IdCategoria: $("#txtid").val(),
+            var Plato = {
+
+                IdPlato: $("#txtid").val(),
+                Nombreplato: $("#txtnombre").val(),
+                Ingredientes: $("#txtingredientes").val(),
+                Precio: $("#txtprecio").val(),
                 Descripcion: $("#txtdescripcion").val(),
+                oCategoria: {
+                    IdCategoria: $("#cbocategoria option:selected").val(),
+                    Descripcion: $("#cbocategoria option:selected").text(),
+                },
+                PrecioTexto: $("#txtprecio").val(),
+                Precio: $("#txtprecio").val(),
                 Activo: $("#cboactivo").val() == 1 ? true : false,
 
             }
 
+            var request = new FormData();
+            request.append("objeto", JSON.stringify(Plato))
+            request.append("archivoImagen", ImagenSeleccionada)
+
+
+
             $.ajax({
-                url: '@Url.Action("GuardarCategoria", "MNT")',
+                url: '@Url.Action("GuardarPlato", "MNT")',
                 type: "POST",
-                data: JSON.stringify({ objeto: Categoria }),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
+                data: request,
+                processData: false,
+                contentType: false,
                 success: function (data) {
 
                     $(".modal-body").LoadingOverlay("hide");
 
-                    //Categoria nueva
-                    if (Categoria.IdCategoria == 0) {
+                    //NUEVO PLATO
+                    if (Plato.IdPlato == 0) {
 
-                        if (data.resultado != 0) {
+                        if (data.idGenerado != 0) {
 
-                            Categoria.IdCategoria = data.resultado;
-                            tabladata.row.add(Categoria).draw(false);
+                            Plato.IdPlato = data.idGenerado;
+                            tabladata.row.add(Plato).draw(false);
                             $("#FormModal").modal("hide");
                         }
                         else
@@ -297,11 +354,11 @@
                         }
 
                     } else
-                    //editar categoria
+                    //EDITAR PLATO
                     {
-                        if (data.resultado) {
+                        if (data.operacion_Exitosa) {
 
-                            tabladata.row(filaSeleccionada).data(Categoria).draw(false);
+                            tabladata.row(filaSeleccionada).data(Plato).draw(false);
                             filaSeleccionada = null;
                             $("#FormModal").modal("hide");
 
