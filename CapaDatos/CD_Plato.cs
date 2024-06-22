@@ -16,14 +16,14 @@ namespace CapaDatos
     {
         public List<Plato> Listar()
         {
-            List<Plato> lista = new List<Plato>();
+            List<Plato> Listar = new List<Plato>();
 
             try
             {
                 using (SqlConnection oConection = new SqlConnection(Conexion.Conection))
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.AppendLine("select p.IdPlato, p.Nombreplato, p.Descripcion,");
+                    sb.AppendLine("select p.IdPlato, p.Nombreplato, p.Ingredientes, p.Descripcion,");
                     sb.AppendLine("c.IdCategoria, c.Descripcion[DesCategoria],");
                     sb.AppendLine("p.Precio, p.Rutaimagen, p.Nombreimagen, p.Activo");
                     sb.AppendLine("from Plato p");
@@ -37,7 +37,7 @@ namespace CapaDatos
                     {
                         while (dr.Read())
                         {
-                            lista.Add(
+                            Listar.Add(
                                 new Plato()
 
                                 {
@@ -57,9 +57,9 @@ namespace CapaDatos
             }
             catch
             {
-                lista = new List<Plato>();
+                Listar = new List<Plato>();
             }
-            return lista;
+            return Listar;
         }
         public int Registrar(Plato obj, out string Mensaje)
         {

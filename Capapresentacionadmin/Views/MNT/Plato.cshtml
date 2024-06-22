@@ -52,9 +52,9 @@
             </div>
             <div class="modal-body ">
 
-                <input id="txtid" type="text" value="0" />
+                <input id="txtid" type="hidden" value="0" />
 
-                <form id="contenedor " class="row">
+                <form id="contenedor" class="row">
                     <div class="col-sm-3">
                         <div class="mb-2">
                             <img id="img_producto" height="197" width="200" class="border rounded mx-auto d-block img-fluid" />
@@ -118,7 +118,7 @@
                 <div class="row mt-2">
                     <div class="col-12">
                         <div id="mensajeError" class="alert alert-danger" role="alert">
-                            A simple danger alert—check it out!
+                            
                         </div>
                     </div>
 
@@ -157,14 +157,23 @@
                 responsive: true,
                 ordering: false,
                 "ajax": {
-                    url: '@Url.Action("ListarCategoria", "MNT")',
+                    url: '@Url.Action("ListarPlato", "MNT")',
                     type: "GET",
                     dataType: "json"
 
 
         },
                 "columns": [
+                    { "data": "Nombreplato" },
+                    { "data": "Ingredientes" },
                     { "data": "Descripcion" },
+                    {
+
+                        "data": "oCategoria", "render": function (data) {
+                            return data.Descripcion
+                        }
+                    },
+                    { "data": "Precio" },
                     {
                         "data": "Activo", "render": function (valor)
                         {
@@ -216,6 +225,39 @@
             }
         });
 
+        jQuery.validator.addMethod("preciodecimal", function (value, element) {
+            return this.optional(element) || /^\d{0,4}(\.\d{0,2})?$/i.test(value);
+        }, "El formato correcto del precio es ##.##");
+
+        $("#contenedor").validate({
+            rules: {
+                nombre: {
+                    required: true
+                },
+                ingredientes: {
+                    required: true
+                },
+                Descripcion: {
+                    required: true
+                }
+                //Precio: {
+                //    required: true,
+                //    preciodecimal: true
+                //}
+
+            },
+            messages: {
+                nombre: "- El campo 'Nombre Plato' es obligatorio.",
+                ingredientes: "- El campo 'Ingredientes' es obligatorio.",
+                Descripcion: "- El campo 'Descripcion' es obligatorio.",
+                /*Precio: {required: "- El campo 'Precio' es obligatorio.", preciodecimal: "El formato correcto del precio es ##.###"}*/
+
+            },
+            errorElement: "div",
+            errorLabelContainer: ".alert-danger"
+        })
+
+
         function AbrirModal(json)
         {
             $("#txtid").val(0);
@@ -240,6 +282,31 @@
                 $("#txtdescripcion").val(json.Descripcion);
                 $("#cbocategoria").val(json.oCategoria.IdCategoria);
                 $("#cboactivo").val(json.Activo == true ? 1 : 0);
+
+                $.ajax({
+                    url: '@Url.Action("ImagenProducto", "MNT")',
+                    type: "POST",
+                    data: JSON.stringify({ id: json.IdPlato }),
+                    DataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        $("#img_producto").LoadingOverlay("hide");
+
+                            if (data.conversion) {
+                                $("#img_producto").attr({ "src": "data:image/" + data.extension + ";base64," + data.textoBase64 });
+                            }
+                        },
+                        error: function (error) {
+                            $("#img_producto").LoadingOverlay("hide");
+                            $("#mensajeError").show();
+                            $("#mensajeError").text("Error al mostrar imagen.");
+                    },
+                    beforeSend: function () {
+                        $("#img_producto").LoadingOverlay("show")
+                },
+            })
+
             }
 
             $("#FormModal").modal("show");
@@ -259,14 +326,14 @@
 
         $("#tabla tbody").on("click", ".btn-eliminar", function () {
 
-            var categoriaseleccionada = $(this).closest("tr");
+            var platoseleccionado = $(this).closest("tr");
 
-            var data = tabladata.row(categoriaseleccionada).data();
+            var data = tabladata.row(platoseleccionado).data();
 
 
             swal({
                 title: "¿Está seguro?",
-                text: "¿Desea eliminar la categoria?, esta opción es irreversible.",
+                text: "¿Desea eliminar este plato?, esta opción es irreversible.",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonClass: "btn-primary",
@@ -277,16 +344,16 @@
                 function () {
 
                     $.ajax({
-                        url: '@Url.Action("EliminarCategoria", "MNT")',
+                        url: '@Url.Action("EliminarPlato", "MNT")',
                         type: "POST",
-                        data: JSON.stringify({ id: data.IdCategoria }),
+                        data: JSON.stringify({ id: data.IdPlato }),
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function (data) {
 
                             if (data.resultado) {
 
-                                tabladata.row(categoriaseleccionada).remove().draw();
+                                tabladata.row(platoseleccionado).remove().draw();
                             } else {
 
                                 swal("No se pudo eliminar", data.mensaje, "error")
@@ -302,6 +369,10 @@
         })
 
         function Guardar() {
+
+            if (!$("#contenedor").valid()) {
+                return;
+            }
 
             var ImagenSeleccionada = $("#fileProducto")[0].files[0];
 

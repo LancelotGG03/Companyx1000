@@ -75,3 +75,9 @@ begin
 	else
 	set @Mensaje = 'El producto se encuentra relacionado a una venta'
 end
+
+select p.IdPlato, p.Nombreplato, p.Ingredientes, p.Descripcion,
+c.IdCategoria, c.Descripcion[DesCategoria],
+p.Precio, p.Rutaimagen, p.Nombreimagen, p.Activo
+from Plato p
+inner join Categoria c on c.IdCategoria = p.IdCat
