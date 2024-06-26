@@ -10,6 +10,7 @@ using CapaNegocio;
 
 namespace Capapresentacionadmin.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -61,6 +62,16 @@ namespace Capapresentacionadmin.Controllers
             respuesta = new CN_Usuarios().Eliminar(id, out mensaje);
 
             return Json(new { resultado = respuesta, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult ListaReporte(string fechainicio, string fechafin)
+        {
+            List<Reporte> oLista = new List<Reporte>();
+
+            oLista = new CN_Reporte().Ventas(fechainicio, fechafin);
+             
+            return Json(new { resultado = oLista }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

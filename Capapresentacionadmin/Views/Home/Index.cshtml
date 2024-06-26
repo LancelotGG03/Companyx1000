@@ -55,7 +55,7 @@
         </div>
     </div>
 </div>
-<div class="card mb-4">
+@*<div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-tags me-1"></i>
         Historial de ventas
@@ -98,7 +98,7 @@
                         <tr>
                             <th>Fecha Venta</th>
                             <th>Cliente</th>
-                            <th>Producto</th>
+                            <th>Plato</th>
                             <th>Precio</th>
                             <th>Cantidad</th>
                             <th>Total</th>
@@ -110,11 +110,15 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 @section scripts
     {
     <script>
+
+
+
+
         $.ajax({
             url: '@Url.Action("VistaDashBoard", "Home")',
             type: "GET",
@@ -130,17 +134,12 @@
             }
         });
 
+    { 
+</script>
 
 
 
 
-
-
-    </script>
-    
-    
-    
-    
 
 
 

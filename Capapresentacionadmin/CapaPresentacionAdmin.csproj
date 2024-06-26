@@ -120,6 +120,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccesoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MNTController.cs" />
     <Compile Include="Global.asax.cs">
@@ -307,6 +308,12 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\fontawesome.min.css" />
+    <Content Include="Content\jqueryUI\jquery-ui.css" />
+    <Content Include="Content\jqueryUI\jquery-ui.min.css" />
+    <Content Include="Content\jqueryUI\jquery-ui.structure.css" />
+    <Content Include="Content\jqueryUI\jquery-ui.structure.min.css" />
+    <Content Include="Content\jqueryUI\jquery-ui.theme.css" />
+    <Content Include="Content\jqueryUI\jquery-ui.theme.min.css" />
     <Content Include="Content\regular.css" />
     <Content Include="Content\regular.min.css" />
     <Content Include="Content\solid.css" />
@@ -452,6 +459,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jqueryUI\jquery-ui.js" />
+    <Content Include="Scripts\jqueryUI\jquery-ui.min.js" />
     <Content Include="Scripts\loadingoverlay\loadingoverlay.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\scripts.js" />
@@ -486,6 +495,9 @@
     <Content Include="Views\Home\Usuarios.cshtml" />
     <Content Include="Views\MNT\Categoria.cshtml" />
     <Content Include="Views\MNT\Plato.cshtml" />
+    <Content Include="Views\Acceso\Index.cshtml" />
+    <Content Include="Views\Acceso\CambiarClave.cshtml" />
+    <Content Include="Views\Acceso\Reestablecer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

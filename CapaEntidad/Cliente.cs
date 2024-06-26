@@ -14,6 +14,7 @@ namespace CapaEntidad
         public string Apellidos { get; set; }
         public string Correo { get; set; }
         public string Contraseña { get; set; }
+        public string ConfirmarContraseña { get; set; }
         public bool Reestablecer { get; set; }
 
     }
