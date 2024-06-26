@@ -88,6 +88,9 @@ namespace CapaNegocio
             return objCapaDato.Eliminar(id, out Mensaje);
         }
 
-
+        public List<Plato> ListarPlatoporCategoria(int idcategoria)
+        {
+            return objCapaDato.ListarPlatoporCategoria(idcategoria);
+        }
     }
 }

@@ -160,6 +160,7 @@ namespace CapaPresentacionTienda.Controllers
         }
         public ActionResult CerrarSesion()
         {
+            Session["IdCliente"] = null;
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Acceso");
         }

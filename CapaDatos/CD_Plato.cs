@@ -211,5 +211,45 @@ namespace CapaDatos
             }
             return resultado;
         }
+
+        public List<Plato> ListarPlatoporCategoria(int idcategoria)
+        {
+            List<Plato> Listar = new List<Plato>();
+
+            try
+            {
+                using (SqlConnection oConection = new SqlConnection(Conexion.Conection))
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine("select distinct c.Descripcion from Plato p");
+                    sb.AppendLine("inner join Categoria c on c.IdCategoria = p.IdCat");
+                    sb.AppendLine("where c.IdCategoria = iif (@idcategoria = 0, c.IdCategoria,@idcategoria");
+
+                    SqlCommand cmd = new SqlCommand(sb.ToString(), oConection);
+                    cmd.Parameters.AddWithValue("@idcategoria", idcategoria);
+                    cmd.CommandType = CommandType.Text;
+
+                    oConection.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Listar.Add(
+                                new Plato()
+
+                                {
+                                    IdPlato = Convert.ToInt32(dr["IdPlato"]),
+                                    Descripcion = dr["Descripcion"].ToString(),
+                                });
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                Listar = new List<Plato>();
+            }
+            return Listar;
+        }
     }
 }

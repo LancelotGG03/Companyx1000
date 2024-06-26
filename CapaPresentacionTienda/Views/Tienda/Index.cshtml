@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Restaurante</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Encuentra tu plato ideal.</p>
+        </div>
+    </div>
+</header>
+<!-- Section-->
+<section>
+    <div class="container-fluid px-5 my-5 ">
+        <div class="row">
+
+            <div class="col-sm-3">
+                <div class="row mb-3">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header bg-dark text-white" >
+                            </div>
+                            Categorias
+                        </div>
+                        <div id="contenedor_categoria" class="card-body">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header bg-dark text-white"></div>
+                            Platos
+                        </div>
+                        <div id="contenedor_plato" class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div id="contenedor_plato" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">Lechona</h5>
+                                    <!-- Product price-->
+                                    $40.00 - $80.00
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Pedir</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+               </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    
+    <script>
+        $(document).ready(function () {
+            MostrarCategorias();
+        })
+
+        function MostrarCategorias() {
+            $.ajax({
+                url: "@Url.Action("ListaCategorias","Tienda")",
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+
+                    $("<div>"), addClass("form-check").append(
+                        $("<input>").addClass("form-check.input").attr({ "type": "radio", "name": "categoria", "value": "0", "id": "cx", "checked": "checked" }),
+                        $("<label>").addClass("form-check-label").text("Todos").attr({ "for": "cx" })
+                    ).appendTo("#contenedor_categoria")
+                }
+            })
+        }
+
+
+
+
+
+    </script>
+    
+    
+    
+    }
